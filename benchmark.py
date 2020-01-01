@@ -2,6 +2,9 @@ import sys
 import subprocess
 import time
 import gramfuzz
+
+sys.path.append('domato')
+
 from grammar import Grammar
 
 def test_domato(grammar, start_symbol, tries):
