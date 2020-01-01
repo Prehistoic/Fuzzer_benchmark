@@ -19,6 +19,10 @@ Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_number_of_test_c
 [start_symbol] : symbol from which the test cases must be created
 [max_number_of_test_cases_generated] : explicit enough, must be > 50, > 1000 is more significative though
 
+### Results
+
+Result is a file name benchmark.png.
+
 ### Additional warnings
 
 At the moment, the program doesn't handle grammars with recursive rules. This will be implemented in the near future
