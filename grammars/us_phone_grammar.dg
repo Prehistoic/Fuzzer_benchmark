@@ -1,0 +1,28 @@
+%%% US_PHONE_GRAMMAR
+
+%section% := value
+
+phone_number :=
+  (+area+)+exchange+-+line+
+
+area :=
+  +lead_digit++digit++digit+
+
+exchange :=
+  +lead_digit++digit++digit+
+
+line :=
+  +digit++digit++digit++digit+
+
+lead_digit :=
+  %range%(2-9)
+
+digit :=
+  %range%(0-9)
+
+%%%===============================================
+
+%section% := variance
+
+main :=
+  +phone_number+

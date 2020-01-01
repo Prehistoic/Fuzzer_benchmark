@@ -1,0 +1,25 @@
+<phone_number> = (<area>)<exchange>-<line>
+
+<area> = <lead_digit><digit><digit>
+<exchange> = <lead_digit><digit><digit>
+<line> = <digit><digit><digit><digit>
+
+<lead_digit> = 2
+<lead_digit> = 3
+<lead_digit> = 4
+<lead_digit> = 5
+<lead_digit> = 6
+<lead_digit> = 7
+<lead_digit> = 8
+<lead_digit> = 9
+
+<digit> = 0
+<digit> = 1
+<digit> = 2
+<digit> = 3
+<digit> = 4
+<digit> = 5
+<digit> = 6
+<digit> = 7
+<digit> = 8
+<digit> = 9
