@@ -67,6 +67,7 @@ def test_gramfuzz(grammar, start_symbol, tries):
 
 
 def print_benchmark(times):
+    print("")
     print("Dharma: " + str(times[0]))
     print("Domato: " + str(times[1]))
     print("Gramfuzz: " + str(times[2]))
@@ -90,8 +91,9 @@ def main():
 
         # Cleaning step
         result = subprocess.run("rm dharma/result.txt", shell=True)
-        result = subprocess.run("rm -rf __pycache__ grammarinator", shell=True)
-        result = subprocess.run("mkdir grammarinator", shell=True)
+        result = subprocess.run("rm -rf __pycache__ grammarinator/tests grammarinator/__pycache__", shell=True)
+        result = subprocess.run("rm grammarinator/*.py", shell=True)
+        result = subprocess.run("rm -rf domato/__pycache__", shell=True)
 
 
 if __name__=="__main__":
