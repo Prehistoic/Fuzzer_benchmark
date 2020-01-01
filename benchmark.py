@@ -2,6 +2,8 @@ import sys
 import subprocess
 import time
 import gramfuzz
+from matplotlib import pyplot as plt
+from matplotlib import style
 
 sys.path.append('domato')
 
@@ -48,10 +50,11 @@ def test_grammarinator(grammar, start_symbol, tries):
     command1 = "grammarinator-process grammars/" + grammar + ".g4 -o grammarinator --no-actions"
     command2 = "grammarinator-generate -l grammarinator/" + grammar + "Unlexer.py -p grammarinator/" + grammar + "Unparser.py -r " + \
     start_symbol + " -o grammarinator/tests/test_%d.html -n " + str(tries)
-    start = time.time()
     result = subprocess.run(command1, stdout=subprocess.PIPE, shell=True)
+    start = time.time()
     result = subprocess.run(command2, stdout=subprocess.PIPE, shell=True)
     end = time.time()
+
     runtime = end - start
     return runtime
 
@@ -66,28 +69,59 @@ def test_gramfuzz(grammar, start_symbol, tries):
     return runtime
 
 
-def print_benchmark(times):
-    print("")
-    print("Dharma: " + str(times[0]))
-    print("Domato: " + str(times[1]))
-    print("Gramfuzz: " + str(times[2]))
-    print("Grammarinator: " + str(times[3]))
+def print_benchmark(x,y1,y2,y3,y4):
+    fig=plt.figure()
+    style.use('ggplot')
+    plt.plot(x,y1,'g',label='domato',linewidth=2)
+    plt.plot(x,y2,'c',label='dharma',linewidth=2)
+    plt.plot(x,y3,'b',label='grammarinator',linewidth=2)
+    plt.plot(x,y4,'m',label='gramfuzz',linewidth=2)
+    plt.title('Grammar-based fuzzers benchmark')
+    plt.ylabel('Time in seconds')
+    plt.xlabel('Number of test cases')
+    plt.legend()
+    plt.grid(True,color='k')
+    fig.savefig("benchmark.png")
+
+
 
 def main():
     if (len(sys.argv) != 4):
-        print("Usage : python3 benchmark.py [grammar_name] [start_symbol] [number_of_test_cases_generated]")
+        print("Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_number_of_test_cases_generated]")
     else:
         grammar = sys.argv[1]
         start_symbol = sys.argv[2]
-        tries = int(sys.argv[3])
+        max_tries = int(sys.argv[3])
 
-        time_domato = test_domato(grammar, start_symbol, tries)
-        time_dharma = test_dharma(grammar,tries)
-        time_grammarinator = test_grammarinator(grammar, start_symbol, tries)
-        time_gramfuzz = test_gramfuzz(grammar,start_symbol,tries)
-        times = [time_dharma, time_domato, time_gramfuzz, time_grammarinator]
+        x = [] # X-axis values
+        y1 = [] # Y-axis values for domato
+        y2 = [] # Y-axis values for dharma
+        y3 = [] # Y-axis values for grammarinator
+        y4 = [] # Y-axis values for gramfuzz
 
-        print_benchmark(times)
+        tries = 10
+        first_tries = [50, 100, 200, 500]
+        first_tries_index = 0
+        while tries <= max_tries :
+            x.append(tries)
+
+            time_domato = test_domato(grammar, start_symbol, tries)
+            time_dharma = test_dharma(grammar,tries)
+            time_grammarinator = test_grammarinator(grammar, start_symbol, tries)
+            time_gramfuzz = test_gramfuzz(grammar,start_symbol,tries)
+
+            y1.append(time_domato)
+            y2.append(time_dharma)
+            y3.append(time_grammarinator)
+            y4.append(time_gramfuzz)
+
+            if(tries < 500):
+                tries = first_tries[first_tries_index]
+                first_tries_index += 1
+            else:
+                tries += 500
+
+        print_benchmark(x,y1,y2,y3,y4)
 
         # Cleaning step
         result = subprocess.run("rm dharma/result.txt", shell=True)

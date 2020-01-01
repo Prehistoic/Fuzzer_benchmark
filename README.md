@@ -13,11 +13,11 @@ To run this benchmark tool, you need :
 
 ### Running
 
-Usage : python3 benchmark.py [grammar_name] [start_symbol] [number_of_test_cases_generated]
+Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_number_of_test_cases_generated]
 
 [grammar_name] : file name of the files in grammars/ without the file extension !
 [start_symbol] : symbol from which the test cases must be created
-[number_of_test_cases_generated] : explicit enough
+[max_number_of_test_cases_generated] : explicit enough, must be > 50, > 1000 is more significative though
 
 ### Additional warnings
 
