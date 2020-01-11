@@ -20,7 +20,7 @@ def test_domato(grammar, start_symbol, tries):
     runtime = end - start
     return runtime
 
-def test_dharma(grammar, tries):
+def test_dharma(grammar, max_recursion, tries):
     command = "dharma -grammars grammars/" + grammar + ".dg -count " + str(tries)
     start = time.time()
     result = subprocess.run(command, stdout=subprocess.PIPE, shell=True)
@@ -46,10 +46,10 @@ def test_dharma(grammar, tries):
 
         return runtime
 
-def test_grammarinator(grammar, start_symbol, tries):
+def test_grammarinator(grammar, start_symbol, max_recursion, tries):
     command1 = "grammarinator-process grammars/" + grammar + ".g4 -o grammarinator --no-actions"
     command2 = "grammarinator-generate -l grammarinator/" + grammar + "Unlexer.py -p grammarinator/" + grammar + "Unparser.py -r " + \
-    start_symbol + " -o grammarinator/tests/test_%d.html -n " + str(tries)
+    start_symbol + " -o grammarinator/tests/test_%d.html -n " + str(tries) + " -d " + str(max_recursion)
     result = subprocess.run(command1, stdout=subprocess.PIPE, shell=True)
     start = time.time()
     result = subprocess.run(command2, stdout=subprocess.PIPE, shell=True)
@@ -58,12 +58,12 @@ def test_grammarinator(grammar, start_symbol, tries):
     runtime = end - start
     return runtime
 
-def test_gramfuzz(grammar, start_symbol, tries):
+def test_gramfuzz(grammar, start_symbol, max_recursion, tries):
     grammar = "grammars/" + grammar + ".py"
     start = time.time()
     fuzzer = gramfuzz.GramFuzzer()
     fuzzer.load_grammar(grammar)
-    result = fuzzer.gen(cat=start_symbol, num=tries)
+    result = fuzzer.gen(cat=start_symbol, num=tries, max_recursion=max_recursion)
     end = time.time()
     runtime = end - start
     return runtime
@@ -86,12 +86,16 @@ def print_benchmark(x,y1,y2,y3,y4):
 
 
 def main():
-    if (len(sys.argv) != 4):
-        print("Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_number_of_test_cases_generated]")
+    if (len(sys.argv) != 5):
+        print("Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_recursion_loops] [max_number_of_test_cases_generated]")
     else:
+        print("To implement max recursion for domato you need to directly write !max_recursion n in its .txt grammar file")
+        print("")
+
         grammar = sys.argv[1]
         start_symbol = sys.argv[2]
-        max_tries = int(sys.argv[3])
+        max_recursion = int(sys.argv[3])
+        max_tries = int(sys.argv[4])
 
         x = [] # X-axis values
         y1 = [] # Y-axis values for domato
@@ -106,9 +110,9 @@ def main():
             x.append(tries)
 
             time_domato = test_domato(grammar, start_symbol, tries)
-            time_dharma = test_dharma(grammar,tries)
-            time_grammarinator = test_grammarinator(grammar, start_symbol, tries)
-            time_gramfuzz = test_gramfuzz(grammar,start_symbol,tries)
+            time_dharma = test_dharma(grammar, max_recursion, tries)
+            time_grammarinator = test_grammarinator(grammar, start_symbol, max_recursion, tries)
+            time_gramfuzz = test_gramfuzz(grammar,start_symbol,max_recursion,tries)
 
             y1.append(time_domato)
             y2.append(time_dharma)

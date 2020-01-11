@@ -1,3 +1,4 @@
+!max_recursion 10
 <phone_number> = (<area>)<exchange>-<line>
 
 <area> = <lead_digit><digit><digit>
