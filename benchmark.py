@@ -30,11 +30,11 @@ def test_dharma(grammar, max_recursion, tries):
         return -1
     else:
         runtime = end - start
+        
         # Here I handle the fact that a test case means several ones for DHARMA
         f = open("dharma/result.txt","w")
         f.write(result.stdout.decode('utf-8'))
         f.close()
-
         r = open("dharma/result.txt","r")
         lines = r.readlines()
         number_of_test_cases = 0;
