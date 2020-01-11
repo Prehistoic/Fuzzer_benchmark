@@ -22,4 +22,4 @@ Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_recursion_loops]
 
 ### Results
 
-Result is a file name benchmark.png.
+Result is a file named benchmark.png.
