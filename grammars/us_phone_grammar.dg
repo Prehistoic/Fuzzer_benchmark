@@ -1,5 +1,7 @@
 %%% US_PHONE_GRAMMAR
 
+%const% VARIANCE_MAX := 1
+
 %section% := value
 
 phone_number :=

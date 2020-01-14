@@ -1,4 +1,3 @@
-
 grammar correct_string_grammar;
 
 correct_string : UPCHAR lower_case_string;

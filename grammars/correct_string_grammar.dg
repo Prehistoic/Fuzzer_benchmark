@@ -1,6 +1,7 @@
 %%% CORRECT_STRING
 
 %const% MAX_REPEAT_POWER := 3
+%const% VARIANCE_MAX := 1
 
 %section% := value
 

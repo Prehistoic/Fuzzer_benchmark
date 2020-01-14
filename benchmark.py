@@ -30,20 +30,6 @@ def test_dharma(grammar, tries):
         return -1
     else:
         runtime = end - start
-
-        # Here I handle the fact that a test case means several ones for DHARMA
-        f = open("dharma/result.txt","w")
-        f.write(result.stdout.decode('utf-8'))
-        f.close()
-        r = open("dharma/result.txt","r")
-        lines = r.readlines()
-        number_of_test_cases = 0;
-        for line in lines:
-            if(line.strip()!=""):
-                number_of_test_cases+=1;
-        runtime = (runtime / number_of_test_cases) * tries
-        r.close()
-
         return runtime
 
 def test_grammarinator(grammar, start_symbol, tries):
@@ -129,7 +115,6 @@ def main():
         print_benchmark(x,y1,y2,y3,y4)
 
         # Cleaning step
-        result = subprocess.run("rm dharma/result.txt", shell=True)
         result = subprocess.run("rm -rf __pycache__ grammarinator/tests grammarinator/__pycache__", shell=True)
         result = subprocess.run("rm grammarinator/*.py", shell=True)
         result = subprocess.run("rm -rf domato/__pycache__", shell=True)

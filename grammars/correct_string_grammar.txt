@@ -1,4 +1,4 @@
-!max_recursion 100
+!max_recursion 10
 <correct_string> = <upChar><lowChar>
 <correct_string> = <correct_string><lowChar>
 

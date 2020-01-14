@@ -1,0 +1,26 @@
+%%% EXPRESSION
+
+%const% MAX_REPEAT_POWER := 2
+%const% VARIANCE_MAX := 1
+
+%section% := value
+
+expression :=
+	+expr+=+expr+;
+	+expr+;
+
+expr :=
+	+expr+*+expr+
+	+expr+++expr+
+	+expr+(+expr+)
+	+id+
+
+id :=
+	%range%(a-z)
+
+%%%===============================================
+
+%section% := variance
+
+main :=
+  +expression+
