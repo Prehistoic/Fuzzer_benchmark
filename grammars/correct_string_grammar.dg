@@ -1,9 +1,11 @@
 %%% CORRECT_STRING
 
+%const% MAX_REPEAT_POWER := 3
+
 %section% := value
 
 correct_string :=
-	+upChar+%repeat%(+lowChar)
+	+upChar+%repeat%(+lowChar+)
 
 upChar :=
   %range%(A-Z)

@@ -1,8 +1,10 @@
-  
+
 grammar correct_string_grammar;
 
-correct_string  : upChar lowChar | correct_string lowChar ;
+correct_string : UPCHAR lower_case_string;
 
-upChar : ('A' .. 'Z');
+lower_case_string : lower_case_string LOWCHAR | LOWCHAR;
 
-lowChar : ('a' .. 'z');
+UPCHAR : [A-Z];
+
+LOWCHAR : [a-z];
