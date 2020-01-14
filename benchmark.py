@@ -81,9 +81,8 @@ def print_benchmark(x,y1,y2,y3,y4):
     plt.xlabel('Number of test cases')
     plt.legend()
     plt.grid(True,color='k')
-    plt.show()
     fig.savefig("benchmark.png")
-
+    plt.show()
 
 
 def main():
