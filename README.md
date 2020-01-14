@@ -15,10 +15,10 @@ To run this benchmark tool, you need :
 
 Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_recursion_loops] [max_number_of_test_cases_generated]
 
-[grammar_name] : file name of the files in grammars/ without the file extension !
-[start_symbol] : symbol from which the test cases must be created
-[max_recursion_loops] : max number of loops inside recursive grammar rules
-[max_number_of_test_cases_generated] : explicit enough, must be > 50, > 1000 is more significative though
+[grammar_name] : file name of the files in grammars/ without the file extension ! <br />
+[start_symbol] : symbol from which the test cases must be created <br />
+[max_recursion_loops] : max number of loops inside recursive grammar rules <br />
+[max_number_of_test_cases_generated] : explicit enough, must be > 50, > 1000 is more significative though <br />
 
 ### Results
 
