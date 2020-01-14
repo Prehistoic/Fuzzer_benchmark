@@ -55,14 +55,15 @@ def test_gramfuzz(grammar, start_symbol, tries):
     return runtime
 
 
-def print_benchmark(x,y1,y2,y3,y4):
+def print_benchmark(x,y1,y2,y3,y4,grammar):
     fig=plt.figure()
     style.use('ggplot')
     plt.plot(x,y1,'g',label='domato',linewidth=2)
     plt.plot(x,y2,'c',label='dharma',linewidth=2)
     plt.plot(x,y3,'b',label='grammarinator',linewidth=2)
     plt.plot(x,y4,'m',label='gramfuzz',linewidth=2)
-    plt.title('Grammar-based fuzzers benchmark')
+    plt.suptitle('Grammar-based fuzzers benchmark', fontsize=18)
+    plt.title(grammar, fontsize=10)
     plt.ylabel('Time in seconds')
     plt.xlabel('Number of test cases')
     plt.legend()
@@ -112,7 +113,7 @@ def main():
             else:
                 tries += 500
 
-        print_benchmark(x,y1,y2,y3,y4)
+        print_benchmark(x,y1,y2,y3,y4,grammar)
 
         # Cleaning step
         result = subprocess.run("rm -rf __pycache__ grammarinator/tests grammarinator/__pycache__", shell=True)
