@@ -20,6 +20,8 @@ Usage : python3 benchmark.py [grammar_name] [start_symbol] [max_recursion_loops]
 [max_recursion_loops] : max number of loops inside recursive grammar rules <br />
 [max_number_of_test_cases_generated] : explicit enough, must be > 50, > 1000 is more significative though <br />
 
+Some grammar examples can be found in the grammars/ directory !
+
 ### Results
 
 Result is a file named benchmark.png.
