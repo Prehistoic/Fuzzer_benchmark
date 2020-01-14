@@ -1,0 +1,19 @@
+%%% CORRECT_STRING
+
+%section% := value
+
+correct_string :=
+	+upChar+%repeat%(+lowChar)
+
+upChar :=
+  %range%(A-Z)
+
+lowChar :=
+  %range%(a-z)
+
+%%%===============================================
+
+%section% := variance
+
+main :=
+  +correct_string+
