@@ -9,6 +9,9 @@ sys.path.append('domato')
 
 from grammar import Grammar
 
+def subprocess_run(command):
+    return subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+
 def test_domato(grammar, start_symbol, tries):
     grammar = "grammars/" + grammar + ".txt"
     start = time.time()
@@ -23,7 +26,7 @@ def test_domato(grammar, start_symbol, tries):
 def test_dharma(grammar, tries):
     command = "dharma -grammars grammars/" + grammar + ".dg -count " + str(tries)
     start = time.time()
-    result = subprocess.run(command, stdout=subprocess.PIPE, shell=True)
+    result = subprocess_run(command)
     end = time.time()
     if(result.returncode!=0):
         print("Crash de dharma, returncode="+result.returncode)
@@ -38,7 +41,7 @@ def test_grammarinator(grammar, start_symbol, tries):
     start_symbol + " -o grammarinator/tests/test_%d.html -n " + str(tries) + " -d 10"
     result = subprocess.run(command1, stdout=subprocess.PIPE, shell=True)
     start = time.time()
-    result = subprocess.run(command2, stdout=subprocess.PIPE, shell=True)
+    result = subprocess_run(command2)
     end = time.time()
 
     runtime = end - start
@@ -116,9 +119,14 @@ def main():
         print_benchmark(x,y1,y2,y3,y4,grammar)
 
         # Cleaning step
-        result = subprocess.run("rm -rf __pycache__ grammarinator/tests grammarinator/__pycache__", shell=True)
-        result = subprocess.run("rm grammarinator/*.py", shell=True)
-        result = subprocess.run("rm -rf domato/__pycache__", shell=True)
+        if sys.platform.startswith('win'):
+            subprocess_run("rmdir /s /q __pycache__ grammarinator\\tests grammarinator\__pycache__")
+            subprocess_run("del /s /q grammarinator\*.py")
+            subprocess_run("rmdir /s /q domato\__pycache__")
+        else:
+            result = subprocess_run("rm -rf __pycache__ grammarinator/tests grammarinator/__pycache__")
+            result = subprocess_run("rm grammarinator/*.py")
+            result = subprocess_run("rm -rf domato/__pycache__")
 
 
 if __name__=="__main__":
